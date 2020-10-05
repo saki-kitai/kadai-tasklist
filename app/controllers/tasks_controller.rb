@@ -9,7 +9,6 @@ class TasksController < ApplicationController
     end 
 
     def show
-        @task = Task.find(params[:id])
     end 
 
     def new
@@ -25,16 +24,14 @@ class TasksController < ApplicationController
         else
             @tasks = current_user.tasks.order(id: :desc).page(params[:page])
             flash.now[:danger] = 'Taskの投稿に失敗しました。'
-            render root_url
+            render :new
         end
     end
     
     def edit
-        @task = Task.find(params[:id])
     end 
     
     def update
-        @task = Task.find(params[:id])
         
         if @task.update(tasks_params)
             flash[:success] = "Taskは正常に更新されました"
@@ -46,7 +43,6 @@ class TasksController < ApplicationController
     end 
     
     def destroy 
-        @task = Task.find(params[:id])
         @task.destroy
         
         flash[:success] = "Taskは正常に削除されました"
